@@ -1,264 +1,192 @@
-# 🌊 StellarFlow YAML
+# N◆IRE
 
-**StellarFlow YAML** is a Web3 automation engine that allows users to define financial workflows and payment logic using simple YAML files—executed seamlessly on the Stellar blockchain.
-
-Think of it as **Zapier for Web3 payments**, powered by YAML and Stellar.
-
----
-
-## 🚀 Overview
-
-StellarFlow YAML enables developers, creators, and businesses to:
-
-* Define workflows in **human-readable YAML**
-* Automate **XLM payments and token transfers**
-* Trigger actions based on **events or conditions**
-* Execute everything transparently on-chain
+> *The declarative payment engine for the on-chain economy.*  
+> Define it in YAML. Execute it on Stellar.
 
 ---
 
-## 🧩 Problem
+## What is NOIRE?
 
-Automation in Web3 is still too complex:
+NOIRE is a **YAML-native workflow automation engine** built on the Stellar blockchain. It lets developers, founders, and builders define complex financial logic in plain, human-readable YAML — and execute it on-chain without writing a single smart contract for the simple stuff.
 
-* ❌ Requires writing smart contracts
-* ❌ Difficult for non-developers
-* ❌ No simple way to define workflows
-* ❌ Payment automation is fragmented
-
-Even simple tasks like:
-
-* Sending daily rewards
-* Triggering payouts
-* Running subscriptions
-
-Require heavy engineering effort.
+Think of it as the automation backbone your Web3 product was missing. No boilerplate. No ceremony. Just intent → execution.
 
 ---
 
-## 💡 Solution
+## Why Stellar?
 
-**StellarFlow YAML** introduces a **declarative automation layer**:
+NOIRE is purpose-built on Stellar because the chain was purpose-built for payments:
 
-👉 Write logic in YAML → Execute on Stellar
+- **⚡ Fast** — 3–5 second finality, not minutes
+- **💸 Cheap** — fractions of a cent per transaction
+- **🌍 Global** — designed for cross-border, real-world payment flows
+- **🦀 Smart** — Soroban brings expressive Rust contracts to the ecosystem
+
+## The Problem Worth Solving
+
+Automation in Web3 is still unnecessarily brutal.
+
+Want to send daily rewards to your community? Write a contract.  
+Want to trigger a payout when a condition is met? Write a contract.  
+Want to run subscription payments across wallets? Write a contract.
+
+Even tasks that could fit on a napkin demand full contract deployments, audits, and gas optimization rituals. Non-engineers are locked out. Logic is fragmented across bespoke scripts. Nothing is auditable at a glance.
+
+**NOIRE changes this.**
 
 ---
 
-### Example Workflow
+## The Solution
+
+A **declarative automation layer** that sits between your application and the Stellar network.
+
+You write the logic. NOIRE handles the rest.
 
 ```yaml
+# workflow.noire.yaml — your entire payment logic
+
 workflow:
+
+  # reward new users automatically
   - event: user_signup
     action: send_xlm
     amount: 5
     to: user_wallet
 
+  # sustain the community treasury, daily
   - event: daily
     action: send_xlm
     amount: 1
     to: community_pool
 
+  # trigger conditional sweeps
   - condition: balance > 100
     action: send_xlm
     amount: 10
     to: treasury_wallet
 ```
 
----
-
-## ⭐ Why Stellar
-
-Built on **Stellar** for:
-
-* ⚡ Fast, low-cost transactions
-* 🌍 Global accessibility
-* 🔗 Native asset support
-* 🧠 Smart contracts via Soroban
-
-Perfect for:
-
-* Micro-payments
-* Automation
-* Real-time execution
+That's it. NOIRE validates it, anchors a hash on Stellar, and executes it — transparently and verifiably.
 
 ---
 
-## 🎯 Core Features
+## Why This Project Is Worth Your Time
 
-### 📄 YAML Workflow Engine
+| What you'll work on | Why it matters |
+|---|---|
+| A real YAML execution engine | Parsing intent into on-chain action is a genuinely hard, interesting problem |
+| Stellar + Soroban integration | Rust smart contracts on one of Web3's most underrated chains |
+| Event-driven runtime in Go | High-throughput scheduling and webhook processing |
+| A React dashboard | Real-time workflow editing with live execution logs |
+| Developer SDK | Making this accessible to the next builder |
 
-* Define workflows in YAML
-* Supports:
-
-  * Events
-  * Conditions
-  * Scheduled triggers
-
----
-
-### ⚙️ Event-Driven Automation
-
-Trigger actions based on:
-
-* User activity
-* API/webhook events
-* Time-based schedules
+This isn't a toy project. The infrastructure pattern here — declarative logic over an execution engine — is the same architecture that powers Zapier, GitHub Actions, and AWS Step Functions. We're bringing it to Web3, on a chain built for global payments.
 
 ---
 
-### 💸 Payment Automation
+## Core Features
 
-* Send XLM automatically
-* Multi-recipient payments
-* Conditional payouts
+### 01 — YAML Workflow Engine
+Define events, conditions, and scheduled triggers in plain YAML. Human-readable. Version-controllable. Reviewable by anyone on the team — not just engineers.
 
----
+### 02 — Event-Driven Execution
+Trigger actions from user activity, API webhooks, or time-based schedules. No polling. No babysitting.
 
-### 🔄 Workflow Execution Engine
+### 03 — Payment Automation
+Native XLM disbursement across single or multiple recipients. Conditional payouts and recurring transfers handled out of the box.
 
-* Parses YAML
-* Converts to executable logic
-* Executes via Stellar transactions
+### 04 — On-Chain Anchoring
+Workflows are stored off-chain for speed, but their hash is anchored on Stellar — making every configuration tamper-evident and fully auditable.
 
----
+### 05 — Soroban Smart Contracts
+Complex conditional logic lives in Rust-based Soroban contracts — the safety of smart contracts without forcing you to write them for every simple flow.
 
-### 🔗 Blockchain Integration
-
-* Wallet-based identity
-* On-chain transaction execution
-* Transparent and verifiable
+### 06 — Security by Default
+Signed transactions, workflow validation, rate limiting, and execution safeguards baked in before anything touches the ledger.
 
 ---
 
-### 🔐 Security Layer
+## Tech Stack
 
-* Signed transactions
-* Workflow validation
-* Rate limiting
-* Execution safeguards
+```
+Frontend    →  React            (Workflow dashboard, YAML editor, live logs)
+Backend     →  Express + Go     (API gateway, execution engine, scheduler)
+Blockchain  →  Stellar + Soroban (XLM payments, Rust smart contracts)
+```
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
-```bash
-stellarflow-yaml/
+```
+noire/
 │
 ├── apps/
-│   ├── dashboard/        # Vue.js UI for workflow creation
+│   └── dashboard/          ← React · Workflow editor + execution logs
 │
 ├── services/
-│   ├── parser/           # YAML parser (Go)
-│   ├── workflow-engine/  # Execution engine (Go)
-│   ├── scheduler/        # Time/event triggers
-│   ├── payments/         # Stellar transaction handler
+│   ├── parser/             ← Go  · YAML ingestion & validation
+│   ├── workflow-engine/    ← Go  · Core execution runtime
+│   ├── scheduler/          ← Go  · Time & event trigger management
+│   ├── payments/           ← Go  · Stellar transaction handler
+│   └── api/                ← Express · External-facing API gateway
 │
 ├── contracts/
-│   ├── stellar/          # Soroban smart contracts
+│   └── stellar/            ← Rust · Soroban smart contracts
 │
 ├── sdk/
-│   ├── js/               # Developer SDK
+│   └── js/                 ← TypeScript SDK for integrators
 │
-└── infra/
+└── infra/                  ← Docker, Compose, CI pipelines
+```
+
+Each service owns one concern and one concern only. Modular by design.
+
+---
+
+## How It Works
+
+```
+1. Write        →  Author your workflow in YAML
+2. Validate     →  NOIRE checks syntax + logic, previews execution
+3. Deploy       →  Workflow stored off-chain, hash anchored on Stellar
+4. Trigger      →  Event fires (signup, timer, condition met)
+5. Execute      →  Engine processes YAML, sends XLM via Stellar
+6. Verify       →  Transaction recorded on-chain. Fully transparent.
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Use Cases
 
-### Frontend
-
-* Vue.js (Dashboard UI)
-
-### Backend
-
-* Go (Core engine & execution)
-* Node.js (API gateway)
-
-### Blockchain
-
-* Stellar SDK
-* Soroban smart contracts
+- **Automated payouts** — reward contributors when milestones are hit
+- **Subscription payments** — recurring billing without a payment processor
+- **Airdrops** — conditional token distribution at scale
+- **Payroll automation** — time-triggered disbursement to team wallets
+- **NGO fund distribution** — transparent, auditable grant flows
+- **Game reward engines** — in-game economies that run themselves
 
 ---
 
-## 🎮 Demo Flow
+## Getting Started
 
-### 1. Create Workflow
-
-* User writes or uploads YAML
-* Example: “Send 5 XLM when user signs up”
-
----
-
-### 2. Validate YAML
-
-* Syntax + logic validation
-* Preview execution
-
----
-
-### 3. Deploy Workflow
-
-* Stored off-chain
-* Hash anchored on Stellar
-
----
-
-### 4. Trigger Event
-
-* Event occurs (signup, timer, condition met)
-
----
-
-### 5. Execute Action
-
-* Engine processes YAML
-* Sends XLM via Stellar
-
----
-
-### 6. Verify On-Chain
-
-* Transaction recorded
-* Fully transparent
-
----
-
-## 🔄 Use Cases
-
-* 💰 Automated payouts
-* 📅 Subscription payments
-* 🎁 Airdrops
-* 🧾 Payroll automation
-* 🎮 Game reward engines (optional integration)
-* 🌍 NGO fund distribution
-
----
-
-## 🚀 Getting Started
-
-### 1️⃣ Clone Repository
-
+**Clone the repository**
 ```bash
-git clone https://github.com/yourusername/stellarflow-yaml.git
-cd stellarflow-yaml
+git clone https://github.com/yourusername/noire.git
+cd noire
 ```
 
-### 2️⃣ Install Dependencies
-
+**Install dependencies**
 ```bash
 pnpm install
 ```
 
-### 3️⃣ Run Services
-
+**Start all services**
 ```bash
 docker-compose up
 ```
 
-### 4️⃣ Start Dashboard
-
+**Launch the dashboard**
 ```bash
 cd apps/dashboard
 npm run dev
@@ -266,20 +194,32 @@ npm run dev
 
 ---
 
-## 🌍 Vision
 
-To become the **standard automation layer for Web3**, where:
 
-* Anyone can define financial logic
-* No smart contract expertise required
-* Payments and workflows run seamlessly
+No other chain makes micro-payment automation this practical.
 
 ---
 
-## 📜 License
+## The Vision
 
-MIT License
+To become the **standard automation layer for Web3 financial flows** — where anyone can define payment logic, no smart contract expertise required, and everything runs transparently on-chain.
+
+The same way no one writes raw SQL to build a web app anymore, no one should write raw contract code to automate a payment.
 
 ---
 
-**StellarFlow YAML — Automate value with simplicity.**
+## Contributing
+
+This project lives and dies by the community that builds it. If you're interested in any layer of the stack — Rust contracts, Go services, React dashboard, SDK design, or documentation — there is meaningful work waiting for you.
+
+Open an issue. Start a discussion. Ship a PR.
+
+---
+
+## License
+
+MIT — free to use, fork, and build upon.
+
+---
+
+*NOIRE — Automate value. With intent.*
